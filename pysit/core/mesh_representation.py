@@ -154,7 +154,7 @@ class PointRepresentationBase(MeshRepresentationBase):
             sigma = self._max_deltas*approximation_width
 
             # round to three decimals to get around very small floating point errors
-            window_width = np.ceil(np.around(approximation_deviations*sigma / np.array(deltas), 3)).astype(np.int)
+            window_width = np.ceil(np.around(approximation_deviations*sigma / np.array(deltas), 3)).astype(np.int32)
 
             # (Position - boundary) / grid spacing, for each direction
             gc = list(map(lambda x,y,z: int(round((z - x)/y)), mins, deltas, pos))
@@ -174,7 +174,7 @@ class PointRepresentationBase(MeshRepresentationBase):
             normalization = 1./((np.sqrt(2*np.pi)**dim)*(sigma**dim))
             # reduce(X, map(Y, (Grid,Pos))) nicely handles both 2D and 3D gaussians
             data = normalization * np.exp( (-0.5/sigma**2) * reduce(lambda x,y: x+y, [(x[0]-x[1])**2 for x in zip(subgrid,pos)]))
-            indices = np.ravel_multi_index(np.array([g.flatten() for g in subranges]).astype(np.int), self.mesh.shape(as_grid=True))
+            indices = np.ravel_multi_index(np.array([g.flatten() for g in subranges]).astype(np.int32), self.mesh.shape(as_grid=True))
             if self._sample_interp_method == 'sparse':
                 indptr = np.array([0,len(indices)])
                 self._sampling_operator_base = spsp.csr_matrix((data.flatten(), indices, indptr), shape=(1,self.mesh.dof()))

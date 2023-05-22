@@ -553,13 +553,13 @@ class MeshBC(object):
 
         if cls is MeshBC:
             if 'structured' in mesh.type:
-                if domain_bc.type is 'dirichlet':
+                if domain_bc.type == 'dirichlet':
                     mesh_bc = StructuredDirichlet
-                if domain_bc.type is 'neumann':
+                if domain_bc.type == 'neumann':
                     mesh_bc = StructuredNeumann
-                if domain_bc.type is 'pml':
+                if domain_bc.type == 'pml':
                     mesh_bc = StructuredPML
-                if domain_bc.type is 'ghost':
+                if domain_bc.type == 'ghost':
                     mesh_bc = StructuredGhost
 
             return mesh_bc(mesh, domain_bc, *args, **kwargs)

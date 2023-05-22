@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """PySIT: Seismic Inversion Toolbox in Python
 
 PySIT is a collection of seismic inversion algorithms and wave solvers for

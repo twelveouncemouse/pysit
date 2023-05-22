@@ -28,7 +28,7 @@ def gaussian_kernel(size, sigma, mesh_deltas=None):
     # Product with the delta ensures that the indices are in the physical units
     # specified.
     idx = tuple([slice(-s, s+1) for s in imsize])
-    grid = [g.astype(np.float)*dx for g,dx in zip(np.mgrid[idx], mesh_deltas)]
+    grid = [g.astype(np.float64)*dx for g,dx in zip(np.mgrid[idx], mesh_deltas)]
 
     # Create a different kernel if sigma is specifed differently for different axes.
     if np.iterable(sigma) and len(sigma) == len(grid):
@@ -113,7 +113,7 @@ def resample_array(arr, new_size, mode='nearest'):
     # new size, old size
     for nsz, osz, i in zip(new_size, sh, itertools.count()):
 
-        x = np.arange(osz, dtype=np.float)
+        x = np.arange(osz, dtype=np.float64)
         I = scipy.interpolate.interp1d(x, y, copy=False, axis=i, kind=mode)
         new_x = np.linspace(0, osz-1, nsz)
         y = I(new_x)

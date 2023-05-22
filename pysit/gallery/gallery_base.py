@@ -297,7 +297,7 @@ class PrecomputedGalleryModel(GalleryModel):
             self.pixel_scale = np.asarray(pixel_scale).reshape(2,)
 
             length = self._coordinate_rbounds - self._coordinate_lbounds
-            self.pixels = np.ceil(length/self.pixel_scale).astype(np.int)
+            self.pixels = np.ceil(length/self.pixel_scale).astype(np.int32)
 
             # Correct physical size to match the number of pixels. This can go
             # over the true max size by up to 1 delta.

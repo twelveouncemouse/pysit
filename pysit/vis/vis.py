@@ -60,10 +60,10 @@ def animate(data, mesh, display_rate=30,pause=1, scale=None, show=True, **kwargs
             if pltclim is None:
                 clim = (data[i].min(),data[i].max())
                 im.set_clim(clim)
-                cbar.set_clim(clim)
+                cbar.mappable.set_clim(clim)
             else:
                 im.set_clim(pltclim)
-                cbar.set_clim(pltclim)
+                cbar.mappable.set_clim(pltclim)
 
             title.set_text('{0:4}/{1}'.format(i,len(data)-1))
             plt.draw()
@@ -95,11 +95,11 @@ def animate(data, mesh, display_rate=30,pause=1, scale=None, show=True, **kwargs
                 clim = (data[i].min(),data[i].max())
                 for im in ims:
                     im.set_clim(clim)
-                cbar.set_clim(clim)
+                cbar.mappable.set_clim(clim)
             else:
                 for im in ims:
                     im.set_clim(pltclim)
-                cbar.set_clim(pltclim)
+                cbar.mappable.set_clim(pltclim)
 
 #           plt.sca(cax)
             title.set_text('{0:4}/{1}'.format(i,len(data)-1))

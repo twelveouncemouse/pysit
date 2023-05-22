@@ -137,8 +137,8 @@ class ConstantDensityAcousticTimeScalar_1D_cpp(ConstantDensityAcousticTimeScalar
 
     def time_step(self, solver_data, rhs_k, rhs_kp1):
 
-        lpmlz = self.mesh.z.lbc.sigma if self.mesh.z.lbc.type is 'pml' else np.array([])
-        rpmlz = self.mesh.z.rbc.sigma if self.mesh.z.rbc.type is 'pml' else np.array([])
+        lpmlz = self.mesh.z.lbc.sigma if self.mesh.z.lbc.type == 'pml' else np.array([])
+        rpmlz = self.mesh.z.rbc.sigma if self.mesh.z.rbc.type == 'pml' else np.array([])
         # lpmlz2 = np.linspace(11.1, -.1, 43)
         # lpmlz2 = lpmlz.copy()
         # rpmlz2 = np.linspace(-0.1, 11.1, 43)
@@ -169,8 +169,8 @@ class ConstantDensityAcousticTimeScalar_1D_omp(ConstantDensityAcousticTimeScalar
 
     def time_step(self, solver_data, rhs_k, rhs_kp1):
 
-        lpmlz = self.mesh.z.lbc.sigma if self.mesh.z.lbc.type is 'pml' else np.array([])
-        rpmlz = self.mesh.z.rbc.sigma if self.mesh.z.rbc.type is 'pml' else np.array([])
+        lpmlz = self.mesh.z.lbc.sigma if self.mesh.z.lbc.type == 'pml' else np.array([])
+        rpmlz = self.mesh.z.rbc.sigma if self.mesh.z.rbc.type == 'pml' else np.array([])
         nz = self.mesh.dof(include_bc=True)
 
         try:

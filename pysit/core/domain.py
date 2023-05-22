@@ -248,7 +248,7 @@ class PML(DomainBC):
         """
 
         val = self.amplitude * self.pml_func(np.linspace(0., 1., n))
-        if orientation is 'left':
+        if orientation == 'left':
             val = val[::-1]
 
         return val

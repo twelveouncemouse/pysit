@@ -92,7 +92,7 @@ def finite_difference_coefficients(z, x, m, tol=1e-10):
 
 
 
-def rational_weights(center, npoints, deriv, dtype=np.int):
+def rational_weights(center, npoints, deriv, dtype=np.int32):
 
     center = int(center)
 
