@@ -1,0 +1,48 @@
+# 1. Install appropriate build tools:
+sudo apt install make cmake gcc-9 g++-9 gfortran-9
+# sudo update-alternatives --remove-all gcc
+# sudo update-alternatives --remove-all g++
+# sudo update-alternatives --remove-all gfortran
+# sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 10
+# sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 20
+# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 10
+# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 20
+# sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-9 10
+# sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-11 20
+
+# 2. Install OpenGL support libraries
+sudo apt install mesa-common-dev libglu1-mesa-dev
+
+# 3. Install Miniconda3 for python 3.7
+# TODO: Test under Miniconda3-py37_23.1.0-1-Linux-x86_64.sh
+wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh
+chmod +x ./Miniconda3-py37_4.8.3-Linux-x86_64.sh
+# Use option "run conda init = yes" installing Miniconda3
+./Miniconda3-py37_4.8.3-Linux-x86_64.sh
+source ~/.bashrc
+
+# 4. Create and activate virtual environment for PySIT.
+conda create -n pysit-updated python=3.7 numpy scipy matplotlib pyamg
+conda activate pysit-updated
+
+# 5. Install obspy
+pip install obspy
+
+# 6. Install python 2.7
+sudo apt install python2
+
+# 7. Run script for PETSc installing
+# TODO: Try using --with-gcc=gcc-9 etc. (under testing)
+# TODO: Use --with-cmake option (under testing)
+# TODO: Try preinstall libmpich-dev and then configure petsc4py using --with-mpich to fix parallel speedup
+chmod +x ./install_petsc4py_linux.sh
+./install_petsc4py_linux.sh
+
+# 8. Install PySIT
+python setup.py install
+
+# 9. Replace petsc.py applying fix
+cp tweaks/petsc.py ~/miniconda3/envs/pysit-updated/lib/python3.7/site-packages/pysit-1.0.1-py3.7-linux-x86_64.egg/pysit/util/wrappers/
+
+# TODO: Try building with Python 3.8 or higher and newer version of PETSc/petsc4py
+

@@ -92,22 +92,6 @@ else
 	echo "OK"
 fi
 
-echo -n "Check if curl is installed : "
-Status=$(which curl)
-if [[ "$Status" == "" ]]; then
-	read -r -p "curl is not install do you want to install it ? [y/N] " response
-	case $response in
-    	[yY][eE][sS]|[yY])
-    		sudo apt-get install curl
-    		;;
-    	*)
-    		exit
-    		;;
-    	esac
-else
-	echo "OK"
-fi
-
 echo -n "Check if pip is installed : "
 Status=$(which pip)
 if [[ "$Status" == "" ]]; then
@@ -133,17 +117,18 @@ while [[ true ]]; do
 done
 
 echo "dowloading petsc :"
-curl http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.9.1.tar.gz | tar xz
+wget https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.9.1.tar.gz
+tar -xzvf ./petsc-3.9.1.tar.gz
 cd petsc-3.9.1
 if [[ $? -ne 0 ]]; then
 	exit
 fi
-./configure --with-cc=gcc --with-cxx=g++ --with-fc=gfortran --download-cmake --download-fblaslapack --download-mpich --download-ptscotch --with-scalar-type=complex --download-metis --download-parmetis --download-suitesparse --download-triangle --download-superlu --download-superlu_dist --download-scalapack --download-mumps --with-shared-libraries --with-python --PETSC_ARCH=arch-linux
+export PETSC_ARCH=linux-ubuntu-22.04-64bit
+./configure --with-cc=gcc-9 --with-cxx=g++-9 --with-fc=gfortran-9 --with-cmake --download-fblaslapack --download-mpich --download-ptscotch --with-scalar-type=complex --download-metis --download-parmetis --download-suitesparse --download-triangle --download-superlu --download-superlu_dist --download-scalapack --download-mumps --with-shared-libraries --with-python --PETSC_ARCH=${PETSC_ARCH}
 if [[ $? -ne 0 ]]; then
 	exit
 fi
 export PETSC_DIR=$(pwd)
-export PETSC_ARCH=arch-linux
 make all
 if [[ $? -ne 0 ]]; then
 	exit
@@ -164,7 +149,8 @@ pip uninstall mpi4py
 pip install mpi4py --user
 echo "Installing petsc4py"
 cd ..
-curl https://files.pythonhosted.org/packages/91/8c/2c5d593b5dc7aff46bd56b7c71fc5550bd342c8295440eb8c9cb255f2e71/petsc4py-3.9.1.tar.gz | tar xz
+wget https://files.pythonhosted.org/packages/91/8c/2c5d593b5dc7aff46bd56b7c71fc5550bd342c8295440eb8c9cb255f2e71/petsc4py-3.9.1.tar.gz
+tar -xzvf ./petsc4py-3.9.1.tar.gz
 cd petsc4py-3.9.1
 python setup.py install
 if [[ $? -ne 0 ]]; then
